@@ -12,7 +12,7 @@ twilio = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AU
 
 module.exports = (robot) ->
 
-  robot.respond /text ([0-9]{10}) (.*)/i, (res) ->
+  robot.respond /respond ([0-9]{10}) (.*)/i, (res) ->
     phoneNumber = res.match[1]
     message = res.match[2]
     console.log "phone number: #{phoneNumber}"
