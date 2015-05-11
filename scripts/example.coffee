@@ -8,14 +8,22 @@
 #
 #   These are from the scripting documentation: https://github.com/github/hubot/blob/master/docs/scripting.md
 
+twilio = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
+
 module.exports = (robot) ->
 
   robot.respond /respond ([0-9]{10}) (.*)/i, (res) ->
-    console.log "respond"
     phoneNumber = res.match[1]
     message = res.match[2]
     console.log "phone number: #{phoneNumber}"
     console.log "message: #{message}"
+    twilio.sendMessage({
+      to: "+1#{phoneNumber}"
+      from: "+16466933663"
+      body: "#{message}"
+    })
+    res.send "Message '#{message}' sent to #{phoneNumber}."
+
 
 #   robot.hear /badger/i, (res) ->
 #     res.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS"
